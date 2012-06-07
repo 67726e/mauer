@@ -53,7 +53,7 @@
 
 			// Get the appropriate column width if the user supplied a function
 			if (typeof this.columnWidth === 'function') {
-				this.columnWidth = this.columnWidth.call(this.containerWidth);
+				this.columnWidth = this.columnWidth.call(this, this.containerWidth);
 			}
 			this.columns = Math.floor(this.containerWidth / this.columnWidth);
 			this.positions = new Array(this.columns);
