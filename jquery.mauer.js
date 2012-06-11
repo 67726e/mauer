@@ -1,4 +1,3 @@
-// Mauer
 (function($, window, undefined) {
 	$.mauer = function(options, callback, element) {
 		this.$element = $(element);
@@ -68,12 +67,25 @@
 				this.options.calculateCallback.call();
 			}
 		},
+		calculateColumn: function() {
+			var columnIndex = 0,
+				leastY = this.positions[0];
+
+			for (var i = 0; i < this.positions.length; i++) {
+				if (this.positions[i] < leastY) {
+					leastY = this.positions[i];
+					columnIndex = i;
+				}
+			}
+
+			return columnIndex;
+		},
 		mauer: function($steine) {
 			var self = this;
 
 			$steine.each(function(index, element) {
 				var $stein = $(element);
-				var column = (index % self.columns);
+				var column = self.calculateColumn();
 				var x = column * self.columnWidth;
 				var y = self.positions[column];
 				var gross = $stein.height();
@@ -84,6 +96,7 @@
 					left: x,
 					top: y
 				});
+
 				$stein.addClass("stein");
 				$stein.addClass("col-" + column);
 			});
