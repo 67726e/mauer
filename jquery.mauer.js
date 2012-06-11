@@ -26,7 +26,11 @@
 		init: function() {
 			this.$element.data("mauer", this);
 			this.resize();
-			this.$window.bind("resize.mauer", this.resize());
+			
+			var self = this;
+			this.$window.bind("resize.mauer", function(){
+				self.resize.apply(self);
+			});
 
 			if (typeof this.options.initCallback === 'function') {
 				this.options.initCallback.call();
