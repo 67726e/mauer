@@ -109,7 +109,7 @@
 			});
 		},
 		append: function($newElements, callback) {
-			this.mauer($newElements);
+			this.mauer($newElements.not(this.options.filter));
 			if (typeof callback === 'function') {
 				callback.call();
 			}
