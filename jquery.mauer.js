@@ -11,6 +11,7 @@
 	$.mauer.defaults = {
 		columnWidth: 360,
 		gutterWidth: 0,
+		filter: undefined,
 		initCallback: undefined,
 		calculateCallback: undefined,
 		mauerCallback: undefined,
@@ -43,8 +44,10 @@
 				}
 			}
 
-			this.calculate();	// Crunch numbers needed for layout
-			this.mauer(this.$element.children());	// Position all child elements
+			// Crunch numbers used in layout
+			this.calculate();
+			// Position child elements
+			this.mauer(this.$element.children().not(this.options.filter));
 			if (typeof this.options.resizeCallback === 'function') {
 				this.options.resizeCallback.call();
 			}
