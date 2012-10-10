@@ -27,7 +27,6 @@
 		columnWidth: 0,
 		containerWidth: 0,
 		positions: new Array(0),
-		$steine: $(),
 
 		init: function() {
 			this.$element.data("mauer", this);
@@ -43,12 +42,6 @@
 			}
 		},
 		resize: function() {
-			if (this.columns && this.$steine) {
-				for (var i = 0; i < this.columns; i++) {
-					this.$steine.removeClass("col-" + i);
-				}
-			}
-
 			// Crunch numbers used in layout
 			this.calculate();
 			// Position child elements
@@ -110,7 +103,6 @@
 				});
 
 				$stein.addClass("stein");
-				$stein.addClass("col-" + column);
 			});
 		},
 		append: function($newElements, callback) {
