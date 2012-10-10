@@ -1,4 +1,8 @@
+/*global jQuery: true*/
+
 (function($, window, undefined) {
+	"use strict";
+
 	$.mauer = function(options, callback, element) {
 		this.$element = $(element);
 		this.$window = $(window);
@@ -6,7 +10,7 @@
 
 		this.init();
 		if (typeof callback === 'function') { callback.call(element); }
-	}
+	};
 
 	$.mauer.defaults = {
 		columnWidth: 360,
@@ -16,13 +20,14 @@
 		calculateCallback: undefined,
 		mauerCallback: undefined,
 		resizeCallback: undefined
-	}
+	};
 
 	$.mauer.prototype = {
 		columns: 0,
 		columnWidth: 0,
 		containerWidth: 0,
 		positions: new Array(0),
+		$steine: $(),
 
 		init: function() {
 			this.$element.data("mauer", this);
@@ -114,26 +119,26 @@
 				callback.call();
 			}
 		}
-	}
+	};
 
 	$.fn.mauer = function(options, callback) {
 		var type = typeof options;
+		var instance = this.data("mauer");
 
 		switch (type) {
 			case 'string':	// Function
 				var args = Array.prototype.slice.call(arguments, 1);
-				var instance = this.data("mauer");
 				instance[options].apply(instance, args);
-				if (typeof callback === 'function') callback.apply(instance);
+				if (typeof callback === 'function') {
+					callback.apply(instance);
+				}
 				break;
-			case 'object':	// Map
 			default:
-				var instance = this.data("mauer");
+			case 'object':	// Map
 				if (instance === undefined) {
 					instance = new $.mauer(options, callback, this);
 				}
 				break;
-
 		}
-	}
+	};
 })(jQuery, window);
