@@ -46,6 +46,8 @@
 			this.calculate();
 			// Position child elements
 			this.mauer(this.$element.children().not(this.options.filter));
+			// Set the height of the container to based on the contents
+			this.$element.height(this.$element.get(0).scrollHeight);
 			if (typeof this.options.resizeCallback === 'function') {
 				this.options.resizeCallback.call();
 			}
