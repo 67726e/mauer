@@ -1,5 +1,7 @@
 /*global jQuery: true*/
 
+/*global jQuery: true*/
+
 (function($, window, undefined) {
 	"use strict";
 
@@ -14,7 +16,8 @@
 
 	$.mauer.defaults = {
 		columnWidth: 360,
-		gutterWidth: 0,
+		gutterWidth: 20,
+		gutterHeight: 20,
 		filter: undefined,
 		initCallback: undefined,
 		calculateCallback: undefined,
@@ -31,7 +34,7 @@
 		init: function() {
 			this.$element.data("mauer", this);
 			this.resize();
-			
+
 			var self = this;
 			this.$window.bind("resize.mauer", function(){
 				self.resize.apply(self);
@@ -61,9 +64,11 @@
 			if (typeof this.columnWidth === 'function') {
 				this.columnWidth = this.columnWidth.call(this, this.containerWidth);
 			}
-			this.columns = Math.floor(this.containerWidth / this.columnWidth);
+			this.columns = Math.floor(this.containerWidth / (this.columnWidth + this.options.gutterWidth));
 			this.positions = new Array(this.columns);
-			this.$element.css("width", (this.columnWidth * this.columns) + "px");
+			var gutterWidths = (this.columns > 0) ? ((this.columns - 1) * this.options.gutterWidth) : 0;
+			var columnWidths = (this.columns * this.columnWidth);
+			this.$element.css("width", (columnWidths + gutterWidths) + "px");
 
 			// Initialize the array of vertical positions
 			for (var i = 0; i < this.columns; i++) {
@@ -93,10 +98,10 @@
 			$steine.each(function(index, element) {
 				var $stein = $(element);
 				var column = self.calculateColumn();
-				var x = column * self.columnWidth;
+				var x = (column * (self.columnWidth + self.options.gutterWidth));
 				var y = self.positions[column];
 				var gross = $stein.height();
-				self.positions[column] += gross + 10; // Add 10px top margin
+				self.positions[column] += (gross + self.options.gutterHeight);
 
 				$stein.css({
 					position: "absolute",
