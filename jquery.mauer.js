@@ -1,7 +1,5 @@
 /*global jQuery: true*/
 
-/*global jQuery: true*/
-
 (function($, window, undefined) {
 	"use strict";
 
